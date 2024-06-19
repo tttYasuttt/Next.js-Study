@@ -29,11 +29,9 @@ export const { auth, signIn, signOut } = NextAuth({
           const { email, password } = parsedCredentials.data;
           const user = await getUser(email);
           if (!user) return null;
-          //↓の処理が原因で異常な動きをする。
-          //参照元が異常？？
-          //const passwordsMatch = await bcrypt.compare(password, user.password);
+          const passwordsMatch = await bcrypt.compare(password, user.password);
  
-          //if (passwordsMatch) return user;
+          if (passwordsMatch) return user;
         }
  
         console.log('Invalid credentials');
